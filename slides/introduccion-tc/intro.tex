@@ -1,0 +1,274 @@
+\documentclass{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \useoutertheme{infolines}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\lstloadlanguages{C++}
+\lstnewenvironment{code}
+	{%\lstset{	numbers=none, frame=lines, basicstyle=\small\ttfamily, }%
+	 \csname lst@SetFirstLabel\endcsname}
+	{\csname lst@SaveFirstLabel\endcsname}
+\lstset{% general command to set parameter(s)
+	language=C++, basicstyle=\footnotesize\sffamily, keywordstyle=\slshape,
+	emph=[1]{tipo,usa}, emphstyle={[1]\sffamily\bfseries},
+	morekeywords={tint,forn,forsn},
+	basewidth={0.47em,0.40em},
+	columns=fixed, fontadjust, resetmargins, xrightmargin=5pt, xleftmargin=15pt,
+	flexiblecolumns=false, tabsize=2, breaklines,	breakatwhitespace=false, extendedchars=true,
+	numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=9pt,
+	frame=l, framesep=3pt,
+}
+
+\usepackage[spanish]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+
+\title % (optional, use only with long paper titles)
+{Training Camp Argentina 2017}
+
+\author % (optional, use only with lots of authors)
+{}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+\institute[UNSAM] % (optional, but mostly needed)
+{
+  Universidad Nacional de San Martín
+}
+\date[TC 2017] % (optional, should be abbreviation of conference name)
+{}
+
+% Acá se puede insertar el logo de la UBA
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSection[]
+%{
+%  \begin{frame}{Contenidos}
+%  \footnotesize
+%    \tableofcontents[currentsection, currentsubsection]
+%  \end{frame}
+%}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Contenidos}
+%  \tableofcontents
+%  % You might wish to add the option [pausesections]
+%\end{frame}
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Tenemos divididos todos los días en tres partes:
+	   \begin{itemize}
+		     \item Mañana: Comienza a las 9:00
+		     \item Almuerzo
+		     \item Tarde
+	   \end{itemize}
+   \item El horario del almuerzo es tiempo libre, previsto entre 12:00 y 13:30 todos los días.
+   \item Durante las mañanas y las tardes, se realizarán todas las actividades del evento propiamente dicho.
+  \end{itemize}
+ 
+\end{frame}
+
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Charlas teóricas
+  \end{itemize}
+  
+  Semana 1:
+  
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & \color{red}C & \color{red}C & \color{red}C & \color{red}C &   \\
+	\mbox{Tarde}  &  &  &  &  &  \end{array}$$
+
+  Semana 2:
+
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & \color{red}C & \color{red}C & \color{red}C & \color{red}C &   \\
+	\mbox{Tarde}  &  &  &  &  &  \end{array}$$
+ 
+\end{frame}
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Simulacros de prueba
+  \end{itemize}
+  
+  Semana 1:
+  
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &   \\
+	\mbox{Tarde}  & \color{red}S & \color{red}S  &  & \color{red}S  & \color{red}S  \end{array}$$
+
+  Semana 2:
+
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &   \\
+	\mbox{Tarde}  & \color{red}S & \color{red}S & \color{red}S & \color{red}S  &  \end{array}$$
+ 
+\end{frame}
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Presentación de Medallia (y resolución de problemas)
+  \end{itemize}
+  
+  Semana 1:
+  
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &   \\
+	\mbox{Tarde}  & S & S & \color{cyan}\mathbf{M}  & S  & S  \end{array}$$
+
+  Semana 2:
+
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &   \\
+	\mbox{Tarde}  & S & S & S & S  &  \end{array}$$
+ 
+\end{frame}
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Resolución de problemas
+  \end{itemize}
+  
+  Semana 1:
+  
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C & \color{red}P \\
+	\mbox{Tarde}  & S & S & \color{cyan}\mathbf{M}  & S  & S  \end{array}$$
+
+  Semana 2:
+
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &  \color{red}P \\
+	\mbox{Tarde}  & S & S & S & S  &  \end{array}$$
+ 
+\end{frame}
+
+\begin{frame}{Cronograma}
+  \begin{itemize}
+  
+  \item Feedback, ceremonia de premiación, y cierre del Training Camp
+  \end{itemize}
+  
+  Semana 1:
+  
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C & P \\
+	\mbox{Tarde}  & S & S & \color{cyan}\mathbf{M}  & S  & S  \end{array}$$
+
+  Semana 2:
+
+  $$\begin{array}{rccccc}
+                  & \mbox{Lunes} & \mbox{Martes} & \mbox{Miércoles} & \mbox{Jueves} & \mbox{Viernes}\\
+	\mbox{Mañana} & C & C & C & C &  P \\
+	\mbox{Tarde}  & S & S & S & S  & \mathbf{PREMIOS} \end{array}$$
+ 
+\end{frame}
+
+
+\begin{frame}{Premios}
+	Se darán premios de acuerdo al desempeño de los equipos en los distintos simulacros o \textit{contest}.
+	\begin{itemize}
+		\item Notar que tenemos 8 contests, numerados de 0 a 7
+		\item El contest 0 es un contest inicial de precalentamiento / diagnóstico, y no se considerará para ninguna entrega de premios
+		\item \textbf{Se deben mantener los mismos equipos durante todo el evento}. Esto es importante porque los premios se ganan \textbf{en equipo}
+		\item El contest 7 se llama también ``Argentina vs Resto del Mundo''
+		\item Además se mantendrá activo durante todo el training camp un concurso ``offcontest'', que incorpora los problemas de todos los simulacros
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Premios}
+\begin{itemize}
+	\item  Premio 1: Al \textit{ganador del TC}: Aquel equipo con máximo puntaje \textit{ON-CONTEST}
+	\item  Premio 2: Al \textit{ganador del Upsolving}: Aquel equipo con máximo puntaje \textit{ON-CONTEST + OFF-CONTEST}
+	\item  Premio 3: A los 3 equipos que conforman el metaequipo ganador del ``Argentina vs Resto del Mundo''
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Premio 1}
+\begin{itemize}
+ \item En el premio 1, gana el equipo que haya resuelto la mayor cantidad de problemas, entre todos los contests 1 a 7 del Training Camp
+ \item En caso de empate, se desempata por la penalidad total, que es la suma de las penalidades del equipo en cada contest
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Premio 2}
+\begin{itemize}
+\item En el premio 2, gana el equipo que resuelva la mayor cantidad de problemas en el concurso especial ``offcontest'' que se mantendrá activo hasta el último día del training camp
+\item En dicho concurso, se habilitarán todos los problemas de los contests 1 a 7, desde el momento en que \textbf{termina} el contest correspondiente
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Premio 3}
+\begin{itemize}
+\item Los 3 equipos de Argentina con mejor puntaje \textit{ON-CONTEST} al finalizar el contest 6, clasifican para el ``Metaequipo Argentino'' en el contest 7 ``Argentina vs Resto del Mundo''
+\item Ocurre algo similar con los 3 mejores que conformarán el metaequipo ``Resto del mundo''
+\item El metaequipo ganador del premio 3 será aquel con máximo total de problemas entre sus 3 equipos en el contest 7, desempatando por penalidad total de sus 3 equipos en dicho contest
+\item Todos los demás equipos participan también de este simulacro de la manera usual, pero a modo de ``invitados'' y fuera de la competencia especial ``Argentina vs Resto del Mundo''
+\item Notar que el contest 7 cuenta también para los premios 1 y 2
+\end{itemize}
+\end{frame} 
+
+\begin{frame}{Bibliografía}
+  \begin{itemize}
+	  \item \url{http://trainingcamp.org.ar}
+	  \item Lista de emails: \texttt{tcarg-2017@googlegroups.com}
+				Pueden unirse con el link: \url{https://groups.google.com/forum/\#!forum/tcarg-2017/join}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}

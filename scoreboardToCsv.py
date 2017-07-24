@@ -4,9 +4,6 @@ import requests
 import sys
 import re
 
-COJ_URL = "http://coj.uci.cu/contest/cscoreboard.xhtml?cid={}&ungroup"
-COJ_URL_UPSOLVING = "http://coj.uci.cu/tables/cscoreboard3.xhtml?cid={}"
-
 identityFormatter = (lambda x : x)
 
 def select(elements, l):
@@ -51,7 +48,7 @@ def a2ojProcessor(teamHtml):
         assert False
 
 def ahmedAly(contestId):
-    A2OJ_URL = "https://a2oj.com/get?ID={}&type=contestRows"
+    A2OJ_URL = "https://a2oj.com/get?ID={}&type=contestRows&non"
     contestToCSV(contestId = contestId,
                  url       = A2OJ_URL, 
                  headers   = ("Posicion" ,"Equipo", "Problemas", "Penalidad"),
@@ -62,6 +59,8 @@ def ahmedAly(contestId):
                 )
     
 def coj(contestId):
+    COJ_URL = "http://coj.uci.cu/contest/cscoreboard.xhtml?cid={}&ungroup"
+    COJ_URL_UPSOLVING = "http://coj.uci.cu/tables/cscoreboard3.xhtml?cid={}"
     ok = contestToCSV(contestId = contestId,
                       url       = COJ_URL, 
                       headers   = ("Posicion" ,"Equipo", "Problemas", "Penalidad"),

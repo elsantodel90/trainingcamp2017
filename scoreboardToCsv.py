@@ -20,14 +20,17 @@ def contestToCSV(contestId, url, headers, teamnameProcessor, teamNameIndex, rege
         rows = ( select(columns, map(str, r)) for r in r.json()[jsonField] )
         
     nothing = True
-    for position, row in enumerate(rows):
+    position = 0
+    for row in rows:
         if nothing:
             sys.stdout.write(",".join(headers))
             sys.stdout.write("\n")                  
             nothing = False
         row[teamNameIndex] = teamnameProcessor(row[teamNameIndex])
-        sys.stdout.write(",".join([str(position+1)] + row))
-        sys.stdout.write("\n")
+        if row[teamNameIndex] is not None:
+            position += 1
+            sys.stdout.write(",".join([str(position)] + row))
+            sys.stdout.write("\n")
     return not nothing
 
 def a2ojProcessor(teamHtml):
@@ -44,8 +47,8 @@ def a2ojProcessor(teamHtml):
     elif special2:
         return "8camparg50"
     else:
-        print teamHtml
-        assert False
+        print >> sys.stderr, "Ignored team:   ", teamHtml
+        return None
 
 def ahmedAly(contestId):
     A2OJ_URL = "https://a2oj.com/get?ID={}&type=contestRows&non"

@@ -59,8 +59,9 @@
   Facultad de Ciencias Exactas y Naturales\\
   Universidad de Buenos Aires
 }
-\date[TC 2017] % (optional, should be abbreviation of conference name)
-{Training Camp Argentina 2017}
+\date[TC 2019] % (optional, should be abbreviation of conference name)
+{Training Camp Argentina 2019\\
+ UNC - FAMAF}
 
 % Acá se puede insertar el logo de la UBA
 % \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
@@ -95,6 +96,40 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
+\begin{frame}
+  ``Pay heed to the tales of old wives. It may well be that they alone keep in memory what it was once needful for the wise to know.''
+  
+  \ 
+  
+  \hfill \textit{J. R. R. Tolkien, The Lord of the Rings}
+
+  \ 
+  
+  \ 
+  
+  \ 
+
+``Memory is the thing you forget with.''
+
+
+  \hfill \textit{Alexander Chase, Perspectives, 1966.}
+
+
+  \ 
+  
+  \ 
+  
+  \ 
+
+``I cannot but remember such things were, \\That were most precious to me.''
+
+  \hfill \textit{William Shakespeare, Macbeth}
+  
+  \hfill \textit{Act IV, scene 3, line 222}
+\end{frame}
+
+
+
 
 
 \section{Repaso de Programación Dinámica}
@@ -113,10 +148,11 @@
 \begin{frame}{Visión constructiva}
 	\begin{itemize}
 		\item Mi forma favorita de pensar programación dinámica
+        \item Aplica principalmente para calcular ``algo'' sobre caminos en un DAG: \textbf{Son la gran mayoría de los casos}.
 		\item Dado el problema que queremos encarar, imaginamos un ``proceso de construir una solución''
 		\item El proceso parte de un \textbf{estado} inicial (eventualmente varios)
 		\item Existen \textbf{transiciones} posibles, a través de las cuáles podemos pasar de un estado a otro
-		\item El grafo de estados y transiciones define un DAG (si hay ciclos, no se puede aplicar DP)
+		\item El grafo de estados y transiciones define un DAG (si hay ciclos, no se puede aplicar DP directamente)
 		\item El estado \textbf{captura toda la información} que necesitamos \textbf{para seguir construyendo la solución} desde ese punto
 	\end{itemize}
 \end{frame}
@@ -141,7 +177,9 @@
 		\item Dominós en un tablero de $2 \times n$
 		\item Cruzar la matriz
 		\item Problema de la mochila
-		\item ``Camino en DAG'' (mínimo, cantidad, etc). Con la visión constructiva, todo problema de DP es caso particular de este (como todos los anteriores)
+        \item Problema del viajante de comercio
+        \item Precomputar $\sum_{S' \subseteq S}{f(S')}$ dada $f$ para todos los $S \subseteq T$
+		\item ``Camino en DAG'' (mínimo, cantidad, etc). Casi todos los problemas de DP son caso particular de este (como lo son todos los anteriores)
 	\end{itemize}
 \end{frame}
 
@@ -153,7 +191,7 @@
 		\item A lo anterior nos referíamos cuando decíamos que el estado captura la información \textbf{necesaria}:
 		   \begin{itemize}
 			  \item Siempre podemos elegir un estado que haga válido el principio del óptimo. El trivial es tomar \textbf{todo el camino} recorrido como estado
-			  \item La gran ganancia de programación dinámica surge de olvidar casi todos los detalles sobre el camino exacto utilizado, quedándose solamente con lo importante para poder completar la solución
+			  \item La gran ganancia de programación dinámica surge de \textbf{olvidar} casi todos los detalles sobre el camino exacto utilizado, quedándose solamente con \textbf{lo importante} para poder completar la solución
 			  \item Por ejemplo para mochila, no podemos sacar del estado la capacidad restante, o no sabremos si un objeto entra o no
 		   \end{itemize}
 	\end{itemize}
@@ -169,9 +207,9 @@
 				\item La solución lexicográficamente más grande
 				\item Más en general, la $i$-ésima solución en orden lexicográfico (¡Notar que depende del orden! La visión constructiva ayuda a razonar en el orden en que queremos, \textbf{de entrada})
 			\end{itemize}
-		\item En mi experiencia personal subjetiva, esta forma de razonar me ayuda mucho a encontrar algoritmos de DP para problemas más difíciles.
+		\item En mi experiencia personal subjetiva, esta forma de razonar me ayuda \textbf{mucho} a encontrar algoritmos de DP para problemas más difíciles.
 		   \begin{itemize}
-			\item Evidencia anecdótica: Cuando expliqué esta forma en una charla de DP en el TC UBA 2014, un equipo Cordobés me dijo que le encantó y que ``al fin entendimos lo que nuestro coach nos decía todo el tiempo: '¡Busquen el estado! ¡Busquen el estado!' ''
+			\item Evidencia anecdótica: Cuando expliqué esta forma en una charla de DP en el TC UBA 2014, un equipo cordobés me dijo que le encantó y que ``al fin entendimos lo que nuestro coach nos decía todo el tiempo: `¡Busquen el estado! ¡Busquen el estado!' ''
 		   \end{itemize}
 	\end{itemize}
 \end{frame}
@@ -181,7 +219,7 @@
 \begin{frame}{Planteo}
 	\begin{itemize}
 		\item En todos los ejemplos que siguen, primero queremos plantear el proceso de crear una solución, como vimos
-		\item Queremos plantearlo de forma que ``cada camino hasta un estado final'' lleve a una solución al problema
+		\item Queremos plantearlo de forma que ``cada camino hasta un estado final'' lleve a una posible solución al problema
 	\end{itemize}
 \end{frame}
 
@@ -249,6 +287,87 @@
     \end{itemize}
 \end{frame}
 
+\section{Tabla aditiva multidimensional}
+
+\subsection{Idea}
+
+\begin{frame}{Sumas parciales (1D)}
+    \begin{itemize}
+		\item $dp$ se inicializa igual que el vector de entrada 
+        \item Se hace \texttt{dp(i) += dp(i-1)} para $i > 0$, en orden
+    \end{itemize}
+    Con este cómputo $O(N)$ está la suma de todos los \textbf{anteriores}
+\end{frame}
+
+\begin{frame}{Sumas parciales (2D)}
+    \begin{itemize}
+		\item $dp$ se inicializa igual que la matriz de entrada
+        \item Se hace \texttt{dp(i,j) += dp(i-1,j)} para $i > 0$, para todos los $j$
+        \item \textbf{Luego} se hace \texttt{dp(i,j) += dp(i,j-1)} para $j > 0$, y todo $i$
+    \end{itemize}
+    Con este cómputo $O(NM)$ está la suma de todos los \textbf{anteriores} en la matriz: $dp(i,j) = \sum_{a=0}^{i} \sum_{b=0}^{j}{v(a,b)}$
+    
+    \ 
+    
+    Es exactamente la idea del teorema de Fubini (con sumatorias).
+\end{frame}
+
+\begin{frame}{Código multidimensional 5D}
+    Ejemplo conceptual para 5 dimensiones. Misma idea, acumular en cada una por separado sucesivamente:
+    \begin{itemize}
+		\item Poner en $dp$ la entrada
+        \item Hacer:\\
+        \footnotesize
+        \texttt{for dim = 0 to 4}\\
+        \texttt{\ for a = 0 to na-1}\\
+        \texttt{\ \ for b = 0 to nb-1}\\
+        \texttt{\ \ \ for c = 0 to nc-1}\\
+        \texttt{\ \ \ \ for d = 0 to nd-1}\\
+        \texttt{\ \ \ \ \ for e = 0 to ne-1}\\
+        \texttt{\ \ \ \ \ \ pa = a-(dim==0); pb = b-(dim==1); pc = c-(dim==2);}\\
+        \texttt{\ \ \ \ \ \ pd = d-(dim==3); pe = e-(dim==4);}\\
+        \texttt{\ \ \ \ \ \ if (pa >= 0 \&\& pb >= 0 \&\& pc >= 0 \&\&}\\
+        \texttt{\ \ \ \ \ \ \ \ \ \ pd >= 0 \&\& pe >= 0)}\\
+        \texttt{\ \ \ \ \ \ \ dp(a,b,c,d,e) += dp(pa,pb,pc,pd,pe)}\\
+    \end{itemize}
+    Para una matriz de $T$ celdas en total y con $d$ dimensiones, este cómputo $O(T d)$ / $O(T d^2)$ calcula la suma de todos los \textbf{anteriores}
+    
+    
+\end{frame}
+
+
+\subsection{Ejemplos}
+
+\begin{frame}{Sumas para los subconjuntos}
+    \begin{itemize}
+		\item Un subconjunto de $T$, que tiene $n$ elementos, es un elemento de una matriz de $2 \times 2 \times \cdots \times 2$ ($n$ veces) [hipercubo]
+        \item Esto pues la máscada de bits nos da las $n$ coordenadas, $0$ o $1$
+        \item Los subconjuntos de un elemento, son a su vez los anteriores en dicha matriz
+        \item Con un for de $1$ a $n$, y luego pasando por los $2^n$ conjuntos haciendo una suma, se computan todas las sumas sobre subconjuntos de
+        cada subconjunto: \\
+        \texttt{for i = 0 to n}\\
+        \texttt{\ for mask = 0 to (1<<n) - 1}\\
+        \texttt{\ \ if (mask \& (1<<i))}\\
+        \texttt{\ \ \ dp(mask) += dp(mask - (1<<i))}\\
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Sumas para los divisores}
+    \begin{itemize}
+		\item Sea $S$ es un conjunto cerrado por divisores, y $P$ la lista de primos que aparecen en los números de $S$
+        \item Un número tiene $|P|$ coordenadas, los exponentes de los primos.
+        \item Los divisores son justamente los ``menores'', vistos con las coordenadas
+        \item Se puede sumar los valores sobre los divisores usando la idea de tabla aditiva $|P|$ dimensional:\\
+        \texttt{for p $\in$ P}\\
+        \texttt{\ for x $\in$ S (DE MENOR A MAYOR)}\\
+        \texttt{\ \ if (p divide a x)}\\
+        \texttt{\ \ \ dp(x) += dp(x / p)}\\
+        
+    \end{itemize}
+\end{frame}
+
+
 \section{Dinámicas con frente}
 
 \subsection{Idea}
@@ -309,7 +428,7 @@
     $$\begin{array}{cccc}
 		\color{red}0 & ? & ? & ? \\
 		\color{red}1 & ? & ? & ? \\
-		\color{red}1 & ? & ? & ? \\
+		\color{red}0 & ? & ? & ? \\
 		? & ? & ? & ? \\
     \end{array}$$
 \end{frame}
@@ -324,8 +443,8 @@
     $$\begin{array}{cccc}
 		\color{red}0 & ? & ? & ? \\
 		\color{red}1 & ? & ? & ? \\
-		\color{red}1 & ? & ? & ? \\
 		\color{red}0 & ? & ? & ? \\
+		\color{red}1 & ? & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -339,8 +458,8 @@
     $$\begin{array}{cccc}
 		0 & \color{red}1 & ? & ? \\
 		\color{red}1 & ? & ? & ? \\
+		\color{red}0 & ? & ? & ? \\
 		\color{red}1 & ? & ? & ? \\
-		\color{red}0 & ? & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -354,8 +473,8 @@
     $$\begin{array}{cccc}
 		0 & \color{red}1 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
+		\color{red}0 & ? & ? & ? \\
 		\color{red}1 & ? & ? & ? \\
-		\color{red}0 & ? & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -369,8 +488,8 @@
     $$\begin{array}{cccc}
 		0 & \color{red}1 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
-		1 & \color{red}0 & ? & ? \\
-		\color{red}0 & ? & ? & ? \\
+		0 & \color{red}0 & ? & ? \\
+		\color{red}1 & ? & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -384,8 +503,8 @@
     $$\begin{array}{cccc}
 		0 & \color{red}1 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
+		0 & \color{red}0 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
-		0 & \color{red}1 & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -399,8 +518,8 @@
     $$\begin{array}{cccc}
 		0 & 1 & \color{red}0 & ? \\
 		1 & \color{red}0 & ? & ? \\
+		0 & \color{red}0 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
-		0 & \color{red}1 & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -414,8 +533,8 @@
     $$\begin{array}{cccc}
 		0 & 1 & \color{red}0 & ? \\
 		1 & 0 & \color{red}0 & ? \\
+		0 & \color{red}0 & ? & ? \\
 		1 & \color{red}0 & ? & ? \\
-		0 & \color{red}1 & ? & ? \\
     \end{array}$$
 \end{frame}
 
@@ -468,21 +587,24 @@
 \begin{frame}{Contexto}
     \begin{itemize}
 		\item ¡Sí! Con la optimización de Knuth
-		\item Dado un algoritmo de dp en rangos cualquiera, es decir \\ $dp(i,j)$ con $0 \leq i \leq j \leq N$
-		\item Si su recursión tiene la forma $dp(i,j) = \mbox{min}_{k=i}^{j-1}{\ g(i,k,j)}$ para cierta $g$ que solo usa los rangos $dp(a,b)$ contenidos en $(i,j)$
+		\item Dado un algoritmo de dp de dos parámetros cualquiera, es decir \\ $dp(i,j)$ con $0 \leq i, j \leq N$ (ejemplo $i \leq j$ si es \textbf{DP en rangos})
+		\item Si su recursión tiene la forma $dp(i,j) = \underset{k}{\mbox{min}}{\ g(i,j, k)}$ para cierta $g$ que solo usa valores $dp(a,b)$ con $a \geq i$ y con $b \leq j$
 		\item Podemos definir $K(i,j)$ como el menor $k$ en donde se alcanza el mínimo de la expresión para $dp(i,j)$
+        \item Para escribir las complejidades, notaremos $|K|$ a la cantidad de valores posibles para $k$ en la expresión. Típicamente $|K|$ es aproximadamente $N$
+        \item En las típicas dp en rango, $k$ se mueve entre $i$ y $j$.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Condición de Knuth}
     \begin{itemize}
 		\item $K(i,j-1) \leq K(i,j) \leq K(i+1, j)$
-		\item En criollo:
+		\item Equivalentemente: $K$ es \textbf{monótona en ambos parámetros}.  
+        \item En criollo para DPs en rangos:
 		  \begin{itemize}
 			\item Si agregamos un elemento por \textbf{izquierda}, \\ el $K$ se mueve \textbf{a la izquierda}
 			\item Si agregamos un elemento por \textbf{derecha}, \\ el $K$ se mueve \textbf{a la derecha}
 		  \end{itemize}
-		\item Llamamos a la anterior la \textit{Condición de Knuth}
+        \item Llamamos a la anterior la \textit{Condición de Knuth}
 		\item Suele ser mucho más difícil demostrar que se cumple, que convencerse o intuir que así será
     \end{itemize}
 \end{frame}
@@ -490,17 +612,43 @@
 \begin{frame}{Optimización de Knuth}
     \begin{itemize}
 		\item Como vale la condición de Knuth, es muy simple cambiar en el código la recursión usando las cotas para iterar menos:
-		\item $dp(i,j) = \mbox{min}_{k=K(i,j-1)}^{K(i+1,j)}{\ g(i,k,j)}$
+		\item $dp(i,j) = \mbox{min}_{k=K(i,j-1)}^{K(i+1,j)}{\ g(i,j,k)}$
 		\item Los $K$ los podemos ir calculando en el mismo algoritmo junto a los valores $dp$.
 		\item Las cotas sirven para iterar menos... ¿Pero estamos mejorando la complejidad asintótica?
 		\pause
 		\invisible<1>{
-			\item Teorema: Con este sencillísimo cambio al código básico, el algoritmo es $O(N^2)$
-			\item Demostración: La sumatoria de los costos es telescópica en 2D
-			\item Si evaluar $g$ no es $O(1)$, el costo son $O(N^2)$ evaluaciones de $g$
+			\item Teorema: Con este sencillísimo cambio al código básico, el algoritmo es $O(N (N+|K|))$ (la cota anterior era $O(N^2 |K|$)
+			\item Demostración: La sumatoria de los costos es telescópica en 2D (dibujos)
+			\item Si evaluar $g$ no es $O(1)$, el costo son $O(N(N+|K|))$ llamadas a $g$
 		}
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Optimización de Knuth (dibujos)}
+    \begin{itemize}
+		\item Costo para calcular $dp(i,j)$: \color{red}$K(i+1,j)\color{black} - \color{green}K(i,j-1)\color{black} + 1$
+    \end{itemize}
+    {\hfill \includegraphics[scale=0.18]{grilla-casilla.png}\hfill }
+\end{frame}
+
+\begin{frame}{Optimización de Knuth (dibujos)}
+    \begin{itemize}
+		\item A lo largo de casi toda la matriz, los términos $K$ se cancelan.
+        \item Las $N^2$ casillas pagan el término $1$: Total $O(N^2)$
+        \item Las $O(N)$ casillas de borde pagan $O(|K|)$ Total $O(N|K|)$
+    \end{itemize}
+    {\hfill \includegraphics[scale=0.16]{grilla-cancelacion.png}\hfill }
+\end{frame}
+
+\begin{frame}{Comentarios}
+    \begin{itemize}
+        \item El dibujo muestra una matriz ``completa'' de $N \times N$
+        \item La demostración aplica si ``borde'' $O(N)$ y tamaño $O(N^2)$
+        \item Ejemplo: la parte triangular superior (dp en rangos)
+    \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}{Ejercicio}
     \begin{itemize}
@@ -519,7 +667,7 @@
 		\pause
 		\invisible<1>{
 			\item $dp(n,k) = \mbox{min}_{i=0}^{n-1}{\ dp(i,k-1) + val(i,n)}$
-			\item Complejidad: $O(n^2 k)$
+			\item Complejidad: $O(N^2 K)$
 			\item ¿Se podrá mejorar?
 		}
     \end{itemize}
@@ -528,17 +676,18 @@
 \begin{frame}{Contexto}
     \begin{itemize}
 		\item ¡Sí! Con la optimización de Divide and Conquer
-		\item Dado un algoritmo de dp ``de particionar'' cualquiera, es decir \\ $dp(n,k)$ con $0 \leq n \leq N$ y $0 \leq k \leq K$
-		\item Si su recursión tiene la forma $dp(n,k) = \mbox{min}_{i=0}^{n-1}{\ g(n,k,i)}$ para cierta $g$ que solo usa los $dp(j,k-1)$ 
+		\item Dado un algoritmo de dp con dos parámetros, es decir \\ $dp(n,k)$ con $0 \leq n \leq N$ y $0 \leq k \leq K$
+		\item Si su recursión tiene la forma $dp(n,k) = \underset{i}{\mbox{min}}{\ g(n,k,i)}$ para cierta $g$ que solo usa los $dp(j,k')$ con $k' < k$ 
 		\item Podemos definir $I(n,k)$ como el menor $i$ en donde se alcanza el mínimo de la expresión para $dp(n,k)$
+        \item Para escribir las complejidades, notaremos $|I|$ a la cantidad de valores posibles para $i$ en la expresión. Típicamente $|I|$ es aproximadamente $N$
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Condición de Divide and Conquer}
     \begin{itemize}
 		\item $I(n,k) \leq I(n+1,k)$
-		\item Para cada $k$, el $I$ es creciente en $n$.
-		\item En criollo: si para $k$ fijo agrando el rango, el último punto de corte también (mejor dicho: no retrocede) 
+		\item Equivalentemente: $I$ es \textbf{monótona en n}.  
+		\item En criollo para DPs de particionar: si para $k$ fijo agrando el rango, el último punto de corte también (mejor dicho: no retrocede) 
 		\item Llamamos a la anterior la \textit{Condición de Divide and Conquer}
 		\item Igual que antes, suele ser mucho más difícil demostrar que se cumple, que convencerse o intuir que así será
     \end{itemize}
@@ -550,7 +699,7 @@
 		\item Supongamos que para calcular todos los $dp(n,k)$ para $k$ fijo, calculamos primero el $dp(n',k)$:
 			\begin{itemize}
 				\item Para los $n > n'$, alcanza con probar el $i$ \textbf{desde} $I(n',k)$ \\
-						Es decir, no más de $L_1 = n - I(n',k) + 1$ valores
+						Es decir, no más de $L_1 = |I| - I(n',k) + 1$ valores
 				\item Para los $n < n'$, alcanza con probar el $i$ \textbf{hasta} $I(n',k)$ \\
 				        Es decir, no más de $L_2 = I(n',k) + 1$ valores
 			\end{itemize}
@@ -563,10 +712,10 @@
     \begin{itemize}
 		\item Podemos seguir partiendo estos rangos en dos recursivamente
 		\item En el paso $k$ tendremos $2^k$ rangos, cada uno con hasta $L_i$ opciones factibles para el $i$.
-		\item Observación: En cada paso, los $L_i$ suman $O(N)$
-		\item Por lo tanto, procesar cada paso es $O(N)$
-		\item Partiendo siempre a la mitad, serán $O(\lg N)$ pasos y la complejidad es $O(N \lg N)$
-		\item El algoritmo final resulta costar $O(KN\lg N)$ evaluaciones de $g$
+		\item Observación: En cada paso, los $L_i$ suman $O(N + |I|)$
+		\item Por lo tanto, procesar cada paso es $O(N + |I|)$
+		\item Partiendo siempre a la mitad, serán $O(\lg N)$ pasos y la complejidad es $O((N + |I|) \lg N)$
+		\item El algoritmo final cuesta $O(K(N+|I|)\lg N)$ evaluaciones de $g$
     \end{itemize}
 \end{frame}
 
@@ -576,6 +725,23 @@
     \begin{itemize}
 		\item Ejercicio: Verificar que la condición de Divide and Conquer aplica en la recursión que vimos antes 
 		\item Pasa lo mismo que antes: Es más fácil intuirlo que probarlo
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Resumen}
+    Optimización de Knuth:
+    \begin{itemize}
+		\item Prototípico para DPs en rangos
+		\item Punto óptimo debe ser monótono en ambas variables
+        \item Requiere cuadrados o ``similares'': $O(N)$ borde, $O(N^2)$ estados
+        \item Le saca un $|I|$ (ejemplo: $N^3 \rightarrow N^2$)
+    \end{itemize}
+    Optimización de Divide and Conquer:
+    \begin{itemize}
+		\item Prototípico para DPs ``de particionar''
+		\item Punto óptimo debe ser monótono en una variable
+        \item Cualquier forma (por ejemplo sirve aún si $K << N$)
+        \item Cambia un $N|I|$ por $(N+|I|) \lg N$ (ejemplo: $KN^2 \rightarrow KN\lg N$)
     \end{itemize}
 \end{frame}
 
